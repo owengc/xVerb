@@ -90,6 +90,8 @@ private:
     ScopedPointer<Label> AllpassGainLabel3;
     ScopedPointer<Slider> AllpassGainKnob2;
     ScopedPointer<TextButton> BypassButton;
+    ScopedPointer<Label> LowpassCutoffLabel;
+    ScopedPointer<Slider> LowpassCutoffKnob;
     Path internalPath1;
     Path internalPath2;
 

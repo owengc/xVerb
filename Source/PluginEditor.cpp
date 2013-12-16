@@ -27,11 +27,11 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-XVerbAudioProcessorEditor::XVerbAudioProcessorEditor (XVerbAudioProcessor* ownerFilter) :juce::AudioProcessorEditor(ownerFilter)
+XVerbAudioProcessorEditor::XVerbAudioProcessorEditor (XVerbAudioProcessor* ownerFilter) : juce::AudioProcessorEditor(ownerFilter)
 {
     addAndMakeVisible (DecayLabel = new Label ("Decay Label",
                                                "Decay"));
-    DecayLabel->setFont (Font (Font::getDefaultMonospacedFontName(), 22.00f, Font::bold));
+    DecayLabel->setFont (Font (Font::getDefaultMonospacedFontName(), 18.00f, Font::bold));
     DecayLabel->setJustificationType (Justification::centred);
     DecayLabel->setEditable (false, false, false);
     DecayLabel->setColour (Label::textColourId, Colours::azure);
@@ -186,7 +186,7 @@ XVerbAudioProcessorEditor::XVerbAudioProcessorEditor (XVerbAudioProcessor* owner
 
     addAndMakeVisible (MixLabel = new Label ("Mix Label",
                                              "Mix"));
-    MixLabel->setFont (Font (Font::getDefaultMonospacedFontName(), 22.00f, Font::bold));
+    MixLabel->setFont (Font (Font::getDefaultMonospacedFontName(), 18.00f, Font::bold));
     MixLabel->setJustificationType (Justification::centred);
     MixLabel->setEditable (false, false, false);
     MixLabel->setColour (Label::textColourId, Colours::azure);
@@ -259,6 +259,29 @@ XVerbAudioProcessorEditor::XVerbAudioProcessorEditor (XVerbAudioProcessor* owner
     BypassButton->setColour (TextButton::textColourOnId, Colours::azure);
     BypassButton->setColour (TextButton::textColourOffId, Colours::azure);
 
+    addAndMakeVisible (LowpassCutoffLabel = new Label ("Lowpass Cutoff",
+                                                       "Lowpass Cutoff"));
+    LowpassCutoffLabel->setFont (Font (Font::getDefaultMonospacedFontName(), 18.00f, Font::bold));
+    LowpassCutoffLabel->setJustificationType (Justification::centred);
+    LowpassCutoffLabel->setEditable (false, false, false);
+    LowpassCutoffLabel->setColour (Label::textColourId, Colours::azure);
+    LowpassCutoffLabel->setColour (TextEditor::textColourId, Colours::black);
+    LowpassCutoffLabel->setColour (TextEditor::backgroundColourId, Colour (0x00ffffff));
+
+    addAndMakeVisible (LowpassCutoffKnob = new Slider ("LowpassCutoff Knob"));
+    LowpassCutoffKnob->setRange (20, 20000, 0);
+    LowpassCutoffKnob->setSliderStyle (Slider::Rotary);
+    LowpassCutoffKnob->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
+    LowpassCutoffKnob->setColour (Slider::backgroundColourId, Colours::cadetblue);
+    LowpassCutoffKnob->setColour (Slider::trackColourId, Colours::coral);
+    LowpassCutoffKnob->setColour (Slider::rotarySliderFillColourId, Colours::aquamarine);
+    LowpassCutoffKnob->setColour (Slider::rotarySliderOutlineColourId, Colours::cadetblue);
+    LowpassCutoffKnob->setColour (Slider::textBoxTextColourId, Colours::aliceblue);
+    LowpassCutoffKnob->setColour (Slider::textBoxBackgroundColourId, Colours::cadetblue);
+    LowpassCutoffKnob->setColour (Slider::textBoxHighlightColourId, Colours::coral);
+    LowpassCutoffKnob->setColour (Slider::textBoxOutlineColourId, Colours::cadetblue);
+    LowpassCutoffKnob->addListener (this);
+
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -298,6 +321,8 @@ XVerbAudioProcessorEditor::~XVerbAudioProcessorEditor()
     AllpassGainLabel3 = nullptr;
     AllpassGainKnob2 = nullptr;
     BypassButton = nullptr;
+    LowpassCutoffLabel = nullptr;
+    LowpassCutoffKnob = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -324,27 +349,29 @@ void XVerbAudioProcessorEditor::paint (Graphics& g)
 
 void XVerbAudioProcessorEditor::resized()
 {
-    DecayLabel->setBounds (proportionOfWidth (0.3889f), proportionOfHeight (0.3513f), proportionOfWidth (0.1021f), proportionOfHeight (0.0812f));
-    DecayKnob->setBounds (proportionOfWidth (0.3799f), proportionOfHeight (0.4600f), proportionOfWidth (0.1201f), proportionOfHeight (0.3307f));
-    CombDelayLabel1->setBounds (proportionOfWidth (0.0000f), proportionOfHeight (0.0275f), proportionOfWidth (0.1667f), proportionOfHeight (0.1213f));
-    CombDelayKnob1->setBounds (proportionOfWidth (0.0090f), proportionOfHeight (0.1350f), proportionOfWidth (0.1389f), proportionOfHeight (0.3238f));
-    CombDelayLabel2->setBounds (proportionOfWidth (0.1576f), proportionOfHeight (0.0275f), proportionOfWidth (0.1667f), proportionOfHeight (0.1213f));
-    CombDelayKnob2->setBounds (proportionOfWidth (0.1667f), proportionOfHeight (0.1350f), proportionOfWidth (0.1389f), proportionOfHeight (0.3238f));
-    CombDelayLabel3->setBounds (proportionOfWidth (0.0000f), proportionOfHeight (0.5137f), proportionOfWidth (0.1667f), proportionOfHeight (0.1213f));
-    CombDelayKnob3->setBounds (proportionOfWidth (0.0090f), proportionOfHeight (0.6213f), proportionOfWidth (0.1389f), proportionOfHeight (0.3238f));
-    CombDelayLabel4->setBounds (proportionOfWidth (0.1576f), proportionOfHeight (0.5137f), proportionOfWidth (0.1667f), proportionOfHeight (0.1213f));
+    DecayLabel->setBounds (proportionOfWidth (0.3333f), proportionOfHeight (0.3514f), proportionOfWidth (0.1019f), proportionOfHeight (0.0811f));
+    DecayKnob->setBounds (proportionOfWidth (0.3241f), proportionOfHeight (0.4595f), proportionOfWidth (0.1204f), proportionOfHeight (0.3311f));
+    CombDelayLabel1->setBounds (proportionOfWidth (0.0000f), proportionOfHeight (0.0270f), proportionOfWidth (0.1667f), proportionOfHeight (0.1216f));
+    CombDelayKnob1->setBounds (proportionOfWidth (0.0093f), proportionOfHeight (0.1351f), proportionOfWidth (0.1389f), proportionOfHeight (0.3243f));
+    CombDelayLabel2->setBounds (proportionOfWidth (0.1574f), proportionOfHeight (0.0270f), proportionOfWidth (0.1667f), proportionOfHeight (0.1216f));
+    CombDelayKnob2->setBounds (proportionOfWidth (0.1667f), proportionOfHeight (0.1351f), proportionOfWidth (0.1389f), proportionOfHeight (0.3243f));
+    CombDelayLabel3->setBounds (proportionOfWidth (0.0000f), proportionOfHeight (0.5135f), proportionOfWidth (0.1667f), proportionOfHeight (0.1216f));
+    CombDelayKnob3->setBounds (proportionOfWidth (0.0093f), proportionOfHeight (0.6216f), proportionOfWidth (0.1389f), proportionOfHeight (0.3243f));
+    CombDelayLabel4->setBounds (proportionOfWidth (0.1482f), proportionOfHeight (0.5135f), proportionOfWidth (0.1667f), proportionOfHeight (0.1216f));
     CombDelayKnob4->setBounds (144, 184, 120, 96);
-    AllpassDelayLabel1->setBounds (proportionOfWidth (0.6757f), proportionOfHeight (0.0275f), proportionOfWidth (0.1667f), proportionOfHeight (0.1213f));
-    AllpassDelayKnob1->setBounds (proportionOfWidth (0.6854f), proportionOfHeight (0.1350f), proportionOfWidth (0.1479f), proportionOfHeight (0.3238f));
-    AllpassGainLabel1->setBounds (proportionOfWidth (0.8333f), proportionOfHeight (0.0275f), proportionOfWidth (0.1667f), proportionOfHeight (0.1213f));
-    AllpassGainKnob1->setBounds (proportionOfWidth (0.8424f), proportionOfHeight (0.1350f), proportionOfWidth (0.1479f), proportionOfHeight (0.3238f));
-    MixLabel->setBounds (proportionOfWidth (0.5090f), proportionOfHeight (0.3513f), proportionOfWidth (0.1021f), proportionOfHeight (0.0812f));
-    MixKnob->setBounds (proportionOfWidth (0.5000f), proportionOfHeight (0.4600f), proportionOfWidth (0.1201f), proportionOfHeight (0.3307f));
-    AllpassDelayLabel2->setBounds (proportionOfWidth (0.6757f), proportionOfHeight (0.5137f), proportionOfWidth (0.1667f), proportionOfHeight (0.1213f));
-    AllpassDelayKnob2->setBounds (proportionOfWidth (0.6854f), proportionOfHeight (0.6213f), proportionOfWidth (0.1479f), proportionOfHeight (0.3238f));
-    AllpassGainLabel3->setBounds (proportionOfWidth (0.8333f), proportionOfHeight (0.5137f), proportionOfWidth (0.1667f), proportionOfHeight (0.1213f));
-    AllpassGainKnob2->setBounds (proportionOfWidth (0.8424f), proportionOfHeight (0.6213f), proportionOfWidth (0.1479f), proportionOfHeight (0.3238f));
-    BypassButton->setBounds (proportionOfWidth (0.4167f), proportionOfHeight (0.8650f), proportionOfWidth (0.1736f), proportionOfHeight (0.0812f));
+    AllpassDelayLabel1->setBounds (proportionOfWidth (0.6759f), proportionOfHeight (0.0270f), proportionOfWidth (0.1667f), proportionOfHeight (0.1216f));
+    AllpassDelayKnob1->setBounds (proportionOfWidth (0.6852f), proportionOfHeight (0.1351f), proportionOfWidth (0.1482f), proportionOfHeight (0.3243f));
+    AllpassGainLabel1->setBounds (proportionOfWidth (0.8333f), proportionOfHeight (0.0270f), proportionOfWidth (0.1667f), proportionOfHeight (0.1216f));
+    AllpassGainKnob1->setBounds (proportionOfWidth (0.8426f), proportionOfHeight (0.1351f), proportionOfWidth (0.1482f), proportionOfHeight (0.3243f));
+    MixLabel->setBounds (proportionOfWidth (0.4537f), proportionOfHeight (0.3514f), proportionOfWidth (0.1019f), proportionOfHeight (0.0811f));
+    MixKnob->setBounds (proportionOfWidth (0.4444f), proportionOfHeight (0.4595f), proportionOfWidth (0.1204f), proportionOfHeight (0.3311f));
+    AllpassDelayLabel2->setBounds (proportionOfWidth (0.6759f), proportionOfHeight (0.5135f), proportionOfWidth (0.1667f), proportionOfHeight (0.1216f));
+    AllpassDelayKnob2->setBounds (proportionOfWidth (0.6852f), proportionOfHeight (0.6216f), proportionOfWidth (0.1482f), proportionOfHeight (0.3243f));
+    AllpassGainLabel3->setBounds (proportionOfWidth (0.8333f), proportionOfHeight (0.5135f), proportionOfWidth (0.1667f), proportionOfHeight (0.1216f));
+    AllpassGainKnob2->setBounds (proportionOfWidth (0.8426f), proportionOfHeight (0.6216f), proportionOfWidth (0.1482f), proportionOfHeight (0.3243f));
+    BypassButton->setBounds (proportionOfWidth (0.4167f), proportionOfHeight (0.8649f), proportionOfWidth (0.1736f), proportionOfHeight (0.0811f));
+    LowpassCutoffLabel->setBounds (proportionOfWidth (0.5741f), proportionOfHeight (0.2973f), proportionOfWidth (0.1111f), proportionOfHeight (0.1655f));
+    LowpassCutoffKnob->setBounds (proportionOfWidth (0.5683f), proportionOfHeight (0.4595f), proportionOfWidth (0.1204f), proportionOfHeight (0.3311f));
     internalPath1.clear();
     internalPath1.startNewSubPath (333.0f, 71.0f);
     internalPath1.quadraticTo (328.0f, 77.0f, 324.0f, 77.0f);
@@ -897,6 +924,12 @@ void XVerbAudioProcessorEditor::sliderValueChanged (Slider* sliderThatWasMoved)
         ourProcessor->setParameterNotifyingHost(XVerbAudioProcessor::AllpassGain2, (float)AllpassGainKnob2->getValue());
         //[/UserSliderCode_AllpassGainKnob2]
     }
+    else if (sliderThatWasMoved == LowpassCutoffKnob)
+    {
+        //[UserSliderCode_LowpassCutoffKnob] -- add your slider handling code here..
+        ourProcessor->setParameterNotifyingHost(XVerbAudioProcessor::LowpassCutoff, (float)LowpassCutoffKnob->getValue());
+        //[/UserSliderCode_LowpassCutoffKnob]
+    }
 
     //[UsersliderValueChanged_Post]
     //[/UsersliderValueChanged_Post]
@@ -945,6 +978,7 @@ void XVerbAudioProcessorEditor::timerCallback(){
         AllpassGainKnob1->setValue(ourProcessor->getParameter(XVerbAudioProcessor::AllpassGain1), juce::dontSendNotification);
         AllpassDelayKnob2->setValue(ourProcessor->getParameter(XVerbAudioProcessor::AllpassDelay2), juce::dontSendNotification);
         AllpassGainKnob2->setValue(ourProcessor->getParameter(XVerbAudioProcessor::AllpassGain2), juce::dontSendNotification);
+        LowpassCutoffKnob->setValue(ourProcessor->getParameter(XVerbAudioProcessor::LowpassCutoff), juce::dontSendNotification);
         ourProcessor->ClearUIUpdateFlag();
         std::cout << "UIUpdated" << std::endl;
     }
@@ -975,13 +1009,13 @@ BEGIN_JUCER_METADATA
     <PATH pos="0 0 100 100" fill="solid: fff0ffff" hasStroke="0" nonZeroWinding="1">s 457.25 66.09 l 456.53 69.47 q 456.37 70.11 456.37 70.92 q 456.37 73.09 458.17 73.09 q 459.9 73.09 466.58 66.33 q 466.62 63.72 468.53 60.3 q 470.44 56.88 472.75 54.31 q 475.06 51.74 476.19 51.74 q 477.96 51.74 477.96 54.07 q 477.96 55.48 477.27 57.51 q 476.59 59.54 475.26 61.89 q 473.94 64.24 472.01 66.74 q 473.01 68.54 474.06 68.54 q 474.94 68.54 476.01 67.92 q 477.07 67.3 478.68 66.01 l 478.68 68.71 q 476.43 70.47 475.12 71.12 q 473.81 71.76 471.76 71.76 q 470.96 71.76 468.87 70.68 q 464.77 75.02 462.2 77.17 q 459.62 79.32 458.01 79.32 q 455.24 79.32 453.29 76 q 451.34 72.69 451.34 68.71 q 451.34 63.36 457.37 55.88 q 459.18 53.63 460.29 52.8 q 461.39 51.98 462.8 51.98 q 464 51.98 465.09 52.42 q 466.18 52.86 466.18 53.47 q 466.18 55.48 463.48 59.36 q 460.79 63.24 457.25 66.09 x s 485.03 67.46 l 485.03 68.46 q 485.03 70.84 486.2 72.16 q 487.36 73.49 489.25 73.49 q 491.22 73.49 493.34 72.57 q 495.45 71.64 497.54 70.11 q 499.63 68.58 502.64 66.01 l 502.64 68.46 q 498.1 73.93 494.12 76.85 q 490.14 79.76 486.04 79.76 q 482.46 79.76 480.37 76.99 q 478.28 74.21 478.28 69.39 q 478.28 65.17 480.25 61.73 q 482.22 58.29 486.68 54.47 q 489.74 51.86 492.75 50.53 q 495.77 49.21 498.14 49.21 q 500.03 49.21 501.14 50.07 q 502.24 50.93 502.24 52.66 q 502.24 55.2 500.35 57.71 q 498.46 60.22 494.58 62.69 q 490.7 65.17 485.03 67.46 x s 485.43 64.85 q 489.05 63.44 491.63 61.35 q 494.2 59.26 495.43 57.35 q 496.65 55.44 496.65 54.55 q 496.65 53.63 495.81 53.63 q 495.08 53.63 493.46 54.55 q 491.83 55.48 490.16 56.96 q 488.49 58.45 487.16 60.46 q 485.84 62.47 485.43 64.85 x s 502.24 69.11 l 502.24 66.49 q 504.41 63.92 505.54 62.11 q 504.25 61.67 503.67 61.03 q 503.09 60.38 503.09 59.1 q 503.09 57.65 504.29 55.44 q 505.5 53.23 507.27 51.3 q 509.04 49.37 510.48 48.8 q 511.05 48.52 511.57 48.52 q 512.37 48.52 512.37 49.29 q 512.37 49.97 511.13 52.06 q 519.41 50.77 521.58 50.77 q 522.43 50.77 522.75 50.93 q 523.43 51.3 523.87 52.62 q 524.31 53.95 524.31 55.28 q 524.31 56.12 523.57 57.11 q 522.83 58.09 521.02 59.98 q 518.89 62.27 517.44 64.97 q 515.99 67.66 515.99 69.03 q 515.99 70.92 518.32 70.92 q 520.78 70.92 526.85 65.93 l 526.85 68.62 q 523.51 72.12 521.34 74.13 q 519.17 76.14 517.32 77.33 q 515.47 78.52 514.02 78.52 q 512.33 78.52 511.21 76.97 q 510.08 75.42 510.08 72.48 q 510.08 70.76 510.97 68.54 q 511.85 66.33 513.56 63.74 q 515.27 61.15 517.4 58.57 q 516.27 58.81 514.87 59.08 q 513.46 59.34 511.89 59.62 q 510.32 59.9 509.48 60.06 q 506.99 65.05 502.24 69.11 x s 553.3 66.09 l 553.3 68.71 q 549.12 71.36 546.71 71.36 q 545.38 71.36 543.9 70.92 q 540.28 75.5 537.68 77.63 q 535.09 79.76 532.48 79.76 q 529.46 79.76 527.83 76.59 q 526.2 73.41 526.2 68.71 q 526.2 62.31 530.06 54.77 q 533.92 47.23 539.37 40.66 q 544.82 34.09 549.93 29.79 q 555.03 25.48 556.84 25.48 q 558.57 25.48 558.57 27.86 q 558.57 38.39 531.55 64.6 q 531.47 65.33 531.47 67.46 q 531.47 73.01 534.45 73.01 q 535.61 73.01 536.8 72.06 q 537.99 71.12 540.44 68.46 q 539.47 66.29 539.47 65.25 q 539.47 63.04 541.28 60.46 q 543.09 57.89 545.4 56.02 q 547.72 54.15 548.76 54.15 q 550.41 54.15 550.41 56.52 q 550.41 58.33 549.46 60.87 q 548.52 63.4 546.71 66.65 q 547.39 67.22 547.8 67.48 q 548.2 67.74 549 67.74 q 550.85 67.74 553.3 66.09 x s 532.88 60.06 q 534.97 58.25 537.08 55.78 q 539.19 53.31 543.25 48.2 q 547.15 43.29 549.38 40.02 q 551.62 36.74 552.74 34.57 q 553.87 32.4 553.87 31.59 q 553.87 30.99 553.55 30.99 q 552.66 30.99 549.87 33.91 q 547.07 36.82 543.49 41.89 q 538.55 48.88 536.34 52.42 q 534.13 55.96 532.88 60.06 x</PATH>
   </BACKGROUND>
   <LABEL name="Decay Label" id="a23f674e6696d274" memberName="DecayLabel"
-         virtualName="" explicitFocusOrder="0" pos="38.889% 35.135% 10.185% 8.108%"
+         virtualName="" explicitFocusOrder="0" pos="33.333% 35.135% 10.185% 8.108%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Decay"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default monospaced font" fontsize="22" bold="1" italic="0"
+         fontname="Default monospaced font" fontsize="18" bold="1" italic="0"
          justification="36"/>
   <SLIDER name="Decay Knob" id="3915f5df8ccf2427" memberName="DecayKnob"
-          virtualName="" explicitFocusOrder="0" pos="37.963% 45.946% 12.037% 33.108%"
+          virtualName="" explicitFocusOrder="0" pos="32.407% 45.946% 12.037% 33.108%"
           bkgcol="ff5f9ea0" trackcol="ffff7f50" rotarysliderfill="ff7fffd4"
           rotaryslideroutline="ff5f9ea0" textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0"
           textboxhighlight="ffff7f50" textboxoutline="ff5f9ea0" min="0.010000000000000000208"
@@ -1027,7 +1061,7 @@ BEGIN_JUCER_METADATA
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="Comb Delay Label 4" id="178e7bb5ae7d849f" memberName="CombDelayLabel4"
-         virtualName="" explicitFocusOrder="0" pos="15.741% 51.351% 16.667% 12.162%"
+         virtualName="" explicitFocusOrder="0" pos="14.815% 51.351% 16.667% 12.162%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Comb Delay 4"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default monospaced font" fontsize="16" bold="1" italic="0"
@@ -1065,18 +1099,18 @@ BEGIN_JUCER_METADATA
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="Mix Label" id="20f48f39f2927cb8" memberName="MixLabel"
-         virtualName="" explicitFocusOrder="0" pos="50.926% 35.135% 10.185% 8.108%"
+         virtualName="" explicitFocusOrder="0" pos="45.37% 35.135% 10.185% 8.108%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Mix"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default monospaced font" fontsize="22" bold="1" italic="0"
+         fontname="Default monospaced font" fontsize="18" bold="1" italic="0"
          justification="36"/>
   <SLIDER name="Mix Knob" id="a6e532f29a4cf942" memberName="MixKnob" virtualName=""
-          explicitFocusOrder="0" pos="50% 45.946% 12.037% 33.108%" bkgcol="ff5f9ea0"
-          trackcol="ffff7f50" rotarysliderfill="ff7fffd4" rotaryslideroutline="ff5f9ea0"
-          textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0" textboxhighlight="ffff7f50"
-          textboxoutline="ff5f9ea0" min="0" max="1" int="0" style="Rotary"
-          textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
-          textBoxHeight="20" skewFactor="1"/>
+          explicitFocusOrder="0" pos="44.444% 45.946% 12.037% 33.108%"
+          bkgcol="ff5f9ea0" trackcol="ffff7f50" rotarysliderfill="ff7fffd4"
+          rotaryslideroutline="ff5f9ea0" textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0"
+          textboxhighlight="ffff7f50" textboxoutline="ff5f9ea0" min="0"
+          max="1" int="0" style="Rotary" textBoxPos="TextBoxBelow" textBoxEditable="1"
+          textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <LABEL name="Allpass Delay Label 1" id="bad10470168fb9ed" memberName="AllpassDelayLabel2"
          virtualName="" explicitFocusOrder="0" pos="67.593% 51.351% 16.667% 12.162%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Allpass Delay 2"
@@ -1107,6 +1141,19 @@ BEGIN_JUCER_METADATA
               virtualName="" explicitFocusOrder="0" pos="41.667% 86.486% 17.361% 8.108%"
               bgColOff="ff5f9ea0" bgColOn="ffff7f50" textCol="fff0ffff" textColOn="fff0ffff"
               buttonText="Bypass" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
+  <LABEL name="Lowpass Cutoff" id="da9addd18b45e924" memberName="LowpassCutoffLabel"
+         virtualName="" explicitFocusOrder="0" pos="57.407% 29.73% 11.111% 16.554%"
+         textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Lowpass Cutoff"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default monospaced font" fontsize="18" bold="1" italic="0"
+         justification="36"/>
+  <SLIDER name="LowpassCutoff Knob" id="5a515ddc99ab2af5" memberName="LowpassCutoffKnob"
+          virtualName="" explicitFocusOrder="0" pos="56.829% 45.946% 12.037% 33.108%"
+          bkgcol="ff5f9ea0" trackcol="ffff7f50" rotarysliderfill="ff7fffd4"
+          rotaryslideroutline="ff5f9ea0" textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0"
+          textboxhighlight="ffff7f50" textboxoutline="ff5f9ea0" min="20"
+          max="20000" int="0" style="Rotary" textBoxPos="TextBoxBelow"
+          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

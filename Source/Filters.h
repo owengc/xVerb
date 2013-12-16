@@ -105,10 +105,16 @@ public:
 //////////////////////////////////////////////////////////
 class Lowpass{
 private:
-    float coef, prev;
+    float cutoff, coef, prev;
 public:
     //constructor
-    Lowpass(const int sr, const float cf);
+    Lowpass(const int sr, const float cf_hz);
+    
+    //getters
+    float getCutoff();
+    
+    //setters
+    void setCutoff(const int sr, const float cf_hz);
     
     //business methods
     float next(const float in);

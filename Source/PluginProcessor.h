@@ -79,6 +79,7 @@ public:
         AllpassDelay1,
         AllpassGain2,
         AllpassDelay2,
+        LowpassCutoff,
         NumParams
     };
     bool NeedsUIUpdate(){return UIUpdateFlag;};

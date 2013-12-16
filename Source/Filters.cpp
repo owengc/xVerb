@@ -160,8 +160,19 @@ float Allpass::next(const float in){
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 //constructor
-Lowpass::Lowpass(const int sr, const float cf){
-    float costh = 2.0 - cos(2.0 * M_PI * cf / sr);
+Lowpass::Lowpass(const int sr, const float cf_hz){
+    cutoff = cf_hz;
+    float costh = 2.0 - cos(2.0 * M_PI * cutoff / sr);
+    coef = sqrt(costh * costh - 1.0) - costh;
+}
+
+//getters
+float Lowpass::getCutoff(){return cutoff;}
+
+//setters
+void Lowpass::setCutoff(const int sr, const float cf_hz){
+    cutoff = cf_hz;
+    float costh = 2.0 - cos(2.0 * M_PI * cutoff / sr);
     coef = sqrt(costh * costh - 1.0) - costh;
 }
 

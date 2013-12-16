@@ -25,9 +25,8 @@ XVerbAudioProcessor::XVerbAudioProcessor()
     UserParams[AllpassGain1] = 0.5f;
     UserParams[AllpassDelay2] = 1.7f;
     UserParams[AllpassGain2] = 0.5f;
+    UserParams[LowpassCutoff] = 2300.0f;
     UIUpdateFlag = true;
-    
-
     //std::cout << "XVerb constructor called" << std::endl;
 }
 
@@ -72,6 +71,8 @@ float XVerbAudioProcessor::getParameter (int index)
             return UserParams[AllpassDelay2];
         case AllpassGain2:
             return UserParams[AllpassGain2];
+        case LowpassCutoff:
+            return UserParams[LowpassCutoff];
         default:
             return 0.0f;
     }
@@ -85,7 +86,6 @@ void XVerbAudioProcessor::setParameter (int index, float newValue)
             break;
         case Mix:
             UserParams[Mix] = newValue;
-            //not implemented yet
             break;
         case Decay:
             UserParams[Decay] = newValue;
@@ -123,10 +123,14 @@ void XVerbAudioProcessor::setParameter (int index, float newValue)
             UserParams[AllpassGain2] = newValue;
             schroeder.setAllpassGain(1, UserParams[AllpassGain2]);
             break;
+        case LowpassCutoff:
+            UserParams[LowpassCutoff] = newValue;
+            schroeder.setLowpassCutoff(0, getSampleRate(), UserParams[LowpassCutoff]);
+            break;
         default:
             break;
     }
-    //std::cout << "updating param " << index << ": " << newValue << std::endl;
+    std::cout << "updating param " << index << ": " << newValue << std::endl;
 }
 
 const String XVerbAudioProcessor::getParameterName (int index)
@@ -154,6 +158,8 @@ const String XVerbAudioProcessor::getParameterName (int index)
             return "Allpass Delay 2";
         case AllpassGain2:
             return "Allpass Gain 2";
+        case LowpassCutoff:
+            return "Lowpass Cutoff";
         default:
             return String::empty;
     }
@@ -333,6 +339,8 @@ void XVerbAudioProcessor::getStateInformation (MemoryBlock& destData)
     el->addTextElement(String(UserParams[AllpassDelay2]));
     el = root.createNewChildElement("AllpassGain2");
     el->addTextElement(String(UserParams[AllpassGain2]));
+    el = root.createNewChildElement("LowpassCutoff");
+    el->addTextElement(String(UserParams[LowpassCutoff]));
     copyXmlToBinary(root, destData);
 }
 
@@ -386,6 +394,10 @@ void XVerbAudioProcessor::setStateInformation (const void* data, int sizeInBytes
             if(pChild->hasTagName("AllpassGain2")){
                 String text = pChild->getAllSubText();
                 setParameter(AllpassGain2, text.getFloatValue());
+            }
+            if(pChild->hasTagName("LowpassCutoff")){
+                String text = pChild->getAllSubText();
+                setParameter(LowpassCutoff, text.getFloatValue());
             }
         }
         delete pRoot;
