@@ -90,10 +90,10 @@ void Schroeder::setAllpassDelay(const int id, const int sr, const float d_ms){al
 float Schroeder::next(const float in){
     float out = 0.0f;
     for(int i = 0; i < NUM_COMBS; i++){
-        out += combs[i]->next(in);
+        out += combs[i]->next(in  * 0.25f);
     }
-    out = allpasses[1]->next(allpasses[0]->next(out));
-    return out * 0.1f * (1.0f / decayFactor);
+    out = allpasses[1]->next(allpasses[0]->next(out * 0.5f));
+    return out;
 }
 //update for change in sampling rate and to clear delay buffers...
 /*void reset(const int sr){

@@ -86,7 +86,7 @@ float Delay::next(const float in, const float gain){
         //std::cout << "wrapping readB" << std::endl;
     }
     
-    buffer[writePos++] = in + (gain * out);//by default there will be no feedback
+    buffer[writePos++] = 0.9f * in + (gain * out);//by default there will be no feedback
     if(writePos == MAX_DELAY_SAMPLES){//if we've reached the end of the buffer
         writePos = 0;//wrap back to the beginning
         //std::cout << "wrapping write" << std::endl;
