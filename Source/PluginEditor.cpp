@@ -919,6 +919,14 @@ void XVerbAudioProcessorEditor::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
+void XVerbAudioProcessorEditor::visibilityChanged()
+{
+    //[UserCode_visibilityChanged] -- Add your code here...
+    XVerbAudioProcessor* ourProcessor = getProcessor();
+    ourProcessor->RaiseUIUpdateFlag();
+    //[/UserCode_visibilityChanged]
+}
+
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
@@ -938,7 +946,9 @@ void XVerbAudioProcessorEditor::timerCallback(){
         AllpassDelayKnob2->setValue(ourProcessor->getParameter(XVerbAudioProcessor::AllpassDelay2), juce::dontSendNotification);
         AllpassGainKnob2->setValue(ourProcessor->getParameter(XVerbAudioProcessor::AllpassGain2), juce::dontSendNotification);
         ourProcessor->ClearUIUpdateFlag();
+        std::cout << "UIUpdated" << std::endl;
     }
+
 }
 //[/MiscUserCode]
 
@@ -956,65 +966,68 @@ BEGIN_JUCER_METADATA
                  componentName="" parentClasses="public AudioProcessorEditor, public Timer"
                  constructorParams="XVerbAudioProcessor* ownerFilter" variableInitialisers=""
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="864" initialHeight="296">
+                 fixedSize="0" initialWidth="864" initialHeight="296">
+  <METHODS>
+    <METHOD name="visibilityChanged()"/>
+  </METHODS>
   <BACKGROUND backgroundColour="ff000000">
     <PATH pos="0 0 100 100" fill="solid: fff0ffff" hasStroke="0" nonZeroWinding="1">s 333.29 71.4 q 328.13 76.78 323.87 77.01 q 323.49 77.16 323.04 77.16 q 322.52 77.16 321.62 76.82 q 320.72 76.48 320.35 76.48 q 319.75 76.48 319.23 76.93 l 311.37 77.01 q 311.37 73.04 311.3 69 q 311 64.14 308.08 62.2 q 307.71 57.19 307.63 51.28 q 307.56 47.39 307.63 40.58 q 307.63 32.72 307.63 29.51 q 312.05 28.91 324.31 29.58 q 327.38 30.26 329.63 33.85 q 331.65 37.06 331.65 40.5 q 331.65 43.94 329.85 47.27 q 328.05 50.6 325.36 52.77 q 324.99 52.92 324.39 52.32 q 323.72 53 323.87 53.22 q 324.39 53.74 326.41 54.04 q 327.98 54.34 328.5 55.61 q 329.25 55.39 330.22 54.31 q 331.2 53.22 332.32 53.3 q 335.39 56.66 335.39 62.05 q 335.39 66.69 333.29 71.4 x s 323.87 41.25 l 323.94 41.25 l 323.42 41.7 q 323.34 41.55 322.52 40.8 q 322 40.28 322.07 39.83 q 321.25 38.33 320.42 36.84 q 319.23 35.27 317.43 35.57 q 317.51 39.98 317.36 49.63 l 318.26 48.66 q 318.55 48.73 318.85 48.73 q 319.6 48.73 320.39 47.61 q 321.17 46.49 321.92 46.49 q 322.37 46.49 322.97 46.79 q 323.12 46.26 323.98 44.92 q 324.84 43.57 324.84 42.9 q 324.84 42 323.87 41.25 x s 325.81 59.8 l 325.74 59.8 q 325.74 58.91 324.5 57.56 q 323.27 56.21 323.49 55.17 q 322.74 56.44 321.25 56.44 q 320.42 56.44 319.68 56.06 l 319.75 56.96 q 319.53 57.41 318.33 57.56 q 317.81 56.81 317.81 56.59 q 316.61 58.38 317.36 58.83 q 317.43 59.95 317.28 64.74 q 317.21 68.33 317.73 70.58 q 318.63 69 320.2 69 q 320.57 69 321.51 69.08 q 322.44 69.15 322.97 69.15 q 324.84 68.11 325.21 64.96 q 325.81 59.88 325.81 59.8 x s 361.94 69.6 l 361.87 69.6 q 361.34 70.72 361.42 72.89 q 361.49 75.96 361.49 76.04 q 361.12 76.19 360.52 75.51 q 359.55 75.89 359.55 76.93 q 359.55 77.08 359.62 77.46 q 359.62 77.91 359.62 78.06 q 359.62 78.88 359.17 79.25 q 358.13 78.43 356.37 78.09 q 354.61 77.76 353.04 77.46 q 353.49 67.28 351.77 57.41 q 351.77 57.48 351.77 55.39 q 351.84 53.89 351.32 53.22 l 350.8 53.74 q 350.8 53.59 351.32 53.18 q 351.84 52.77 351.84 52.32 q 351.84 52.1 351.77 51.87 l 351.24 51.35 q 349.82 51.8 349.82 54.04 q 349.82 55.54 348.78 56.06 q 349.15 56.44 349.15 56.96 q 349.15 57.26 349.04 57.78 q 348.92 58.31 348.92 58.61 q 348.92 59.28 349.45 59.73 q 349.45 60.18 349.45 67.81 q 349.45 72.67 348.85 76.04 l 348.85 77.31 q 348.33 77.23 347.65 77.23 q 346.91 77.23 345.48 77.34 q 344.06 77.46 343.39 77.46 q 340.62 77.46 339.57 76.04 l 340.1 48.13 q 339.65 46.04 339.65 42.37 l 339.65 36.99 q 339.57 33.02 339.13 30.85 q 339.42 29.43 341.22 29.43 q 342.34 29.43 344.21 30.03 q 345.11 29.58 346.68 29.58 q 347.13 29.58 348.1 29.66 q 349.15 29.66 349.6 29.66 q 352.52 29.66 353.56 27.71 q 354.91 27.79 356.44 28.98 q 357.98 30.18 359.17 30.33 q 362.24 32.87 362.24 38.26 q 362.24 39.46 361.04 47.69 l 357.23 51.35 q 358.05 53.52 359.02 60.7 q 359.85 66.69 361.94 69.6 x s 356.7 37.44 l 356.78 37.51 q 356.85 38.04 356.85 33.85 q 356.85 31.83 355.81 30.85 q 355.13 31.9 354.72 34.41 q 354.31 36.91 353.56 37.96 q 351.69 37.81 351.39 35.57 q 350.72 31.9 350.72 31.83 l 350.72 32.8 q 350.42 33.1 350.05 33.47 q 349.67 33.85 349.3 33.7 q 349.3 34.15 348.89 35.08 q 348.48 36.02 348.48 36.39 q 348.48 37.06 349.3 37.44 q 349.07 38.93 349.07 40.58 q 349.07 41.48 349.22 44.69 q 349.45 47.24 349.3 49.03 q 349.97 49.11 350.57 49.11 q 353.19 49.11 354.09 46.79 q 354.39 46.11 354.91 41.85 q 355.36 38.63 356.7 37.44 x s 392.76 59.06 l 392.83 58.98 q 392.69 59.73 392.16 65.64 q 391.71 69.75 390.96 72.22 q 390.52 72.37 390.14 72.37 q 389.39 72.37 388.91 71.21 q 388.42 70.05 387.97 70.05 q 387.52 70.05 386.7 70.72 q 385.35 70.05 384.08 69.34 q 382.81 68.63 382.96 66.98 l 383.56 66.61 q 382.81 62.95 382.36 50.38 q 382.06 39.76 379.82 34.37 q 379.22 34.59 379.22 35.27 q 379.3 36.31 379.3 36.24 l 377.87 33.92 q 377.43 34.37 377.43 35.49 q 377.5 36.99 377.43 37.21 q 376.45 37.06 376 37.74 q 375.56 38.41 375.11 39.08 l 376.53 63.24 l 375.56 64.22 l 375.11 63.77 q 374.81 63.92 372.04 66.31 q 370.39 67.73 368.15 67.51 q 367.4 62.72 366.65 57.86 q 365.83 51.8 365.83 47.61 q 365.83 36.46 371.89 31.15 q 372.56 31 374.96 30.11 q 376.9 29.36 378.17 29.36 q 379.22 29.36 380.19 29.81 q 380.34 29.21 381.09 29.21 q 381.84 29.21 381.99 29.13 q 382.74 30.41 384.38 30.26 q 388.42 33.17 390.22 38.33 q 391.56 42.15 391.86 48.43 q 392.09 53.52 392.31 58.61 x s 389.62 76.56 q 388.87 76.63 387.75 76.48 q 386.4 76.26 386.03 76.26 q 384.83 76.26 384.08 77.08 l 383.11 78.95 q 382.74 78.5 381.5 78.5 q 380.27 78.5 379.89 77.98 q 379.67 78.5 379 78.5 q 378.55 78.5 378.02 78.5 q 378.1 78.13 377.5 77.53 q 377.2 78.13 376.45 78.13 q 374.81 78.06 375.18 77.98 l 374.73 77.53 q 374.13 78.13 373.83 77.98 q 373.31 77.76 373.31 76.63 q 375.63 76.11 376.15 74.39 q 375.7 73.34 374.43 73.04 q 372.71 72.67 372.41 72.45 q 372.04 72.52 371.07 72.82 q 370.09 73.12 369.65 73.12 q 368.6 73.12 368.22 71.62 q 368 71.1 368 70.72 q 368 69.98 369.38 69.75 q 370.77 69.53 370.99 69.23 q 372.41 68.18 373.76 67.13 q 375.48 65.79 377.05 65.94 q 377.5 66.76 377.8 69 q 378.1 71.25 378.55 72.15 q 379.37 73.57 381.24 73.87 l 381.91 72.22 q 382.21 71.25 382.96 71.1 q 383.63 71.1 384.83 71.88 q 386.03 72.67 386.78 72.67 q 387.22 72.67 387.75 72.45 q 388.42 73.12 388.87 74.54 q 389.47 76.19 389.62 76.56 x s 421.41 76.56 l 421.48 76.63 q 420.29 76.63 419.99 76.19 l 419.54 76.56 l 419.09 76.19 q 418.94 76.19 417.15 76.19 q 415.58 76.19 414.9 76.56 q 412.58 74.84 412.21 70.13 q 411.69 63.99 411.16 62.65 q 409.29 58.16 409.74 52.47 l 408.84 51.05 q 408.84 52.25 407.91 52.96 q 406.97 53.67 406 54.34 q 405.78 54.42 405.55 54.42 q 405.03 54.42 404.28 53.93 q 403.53 53.45 403.23 53.37 q 402.78 54.19 402.04 53.63 q 401.29 53.07 400.99 53.82 q 401.36 55.17 404.43 55.32 q 407.5 55.46 407.5 56.59 q 407.5 57.41 406.45 58.98 q 404.88 61.22 405.33 65.34 q 405.78 70.05 405.1 72 q 404.95 72.37 404.95 72.82 q 404.95 73.34 405.25 74.2 q 405.55 75.06 405.55 75.51 q 405.55 76.11 405.1 76.63 q 403.83 75.89 401.1 76.45 q 398.37 77.01 397.29 75.85 q 396.2 74.69 396.2 72.89 q 396.2 72 396.5 70.13 q 396.8 68.26 396.8 67.28 q 396.8 66.01 396.35 64.96 q 396.87 62.5 396.8 58.38 q 396.72 51.87 396.72 51.5 q 396.2 51.57 397.77 51.57 q 398.37 51.57 398.59 51.05 q 397.17 49.63 397.17 47.46 q 397.17 46.56 397.51 44.62 q 397.85 42.67 397.85 41.7 q 397.85 40.65 397.47 38.67 q 397.1 36.69 397.1 35.64 q 397.1 33.92 397.58 30.59 q 398.07 27.26 398.15 25.39 l 407.05 25.92 q 407.12 28.31 406.37 32.5 q 405.55 36.99 405.55 38.93 q 405.55 40.73 406 42.22 q 406 42.3 406 43.2 q 405.93 43.87 406.45 44.02 q 406.15 41.7 408.17 38.63 q 410.34 35.27 410.34 33.4 q 410.34 32.65 410.19 31.98 q 411.24 31.08 412.06 28.61 q 412.88 26.14 413.93 25.39 l 421.41 26.37 l 421.41 27.79 l 420.96 27.71 q 419.91 30.26 418.87 32.8 q 417.45 35.72 415.8 37.59 q 415.35 39.53 415.35 41.63 q 415.35 45.22 417.37 52.02 q 419.39 59.06 419.54 62.57 q 419.69 63.69 420.74 68.56 q 421.56 72.15 421.56 74.46 q 421.56 75.59 421.41 76.56 x s 446.62 35.87 q 445.95 35.94 445.12 35.94 q 443.4 35.94 440.56 35.49 q 437.04 35.04 436.3 34.97 q 435.25 36.54 435.25 39.38 q 435.25 45.52 435.32 44.69 q 436.37 45.29 436.37 46.94 q 436.3 49.18 436.37 49.26 q 435.85 49.48 435.85 50.75 q 435.02 50.45 434.13 49.56 q 432.93 48.43 433 47.46 l 432.56 47.91 l 432.11 47.46 q 431.51 47.54 430.05 46.86 q 428.59 46.19 427.99 45.59 q 427.99 44.39 428.37 44.24 l 427.39 43.2 l 426.95 43.87 q 425.97 36.09 426.87 27.86 q 429.71 28.31 433.15 28.39 q 435.47 28.46 439.66 28.39 q 444.45 28.31 446.54 28.31 q 447.44 29.13 447.44 30.48 q 447.44 31.3 447.03 33.14 q 446.62 34.97 446.62 35.87 x s 447.07 71.7 l 447.07 71.62 q 446.62 72.59 446.54 73.87 q 446.47 74.69 446.54 76.19 q 446.62 77.91 446.62 78.58 q 446.02 78.58 441.83 78.58 q 439.29 78.58 437.27 79.1 l 435.85 77.61 q 435.25 78.21 435.4 78.58 q 435.02 78.5 431.96 78.58 q 429.56 78.58 428.37 78.13 q 427.17 79.4 425.52 78.13 q 424.93 77.68 425.37 76.6 q 425.82 75.51 425.08 74.99 q 425.15 72.59 425.6 67.58 q 426.05 63.09 426.05 60.55 q 426.05 57.11 425.45 53.97 q 426.27 53.15 427.32 53.15 q 428.52 53.15 430.16 54.27 q 432.48 55.84 432.56 55.84 l 433 56.36 q 433.08 56.14 433.75 53.97 q 434.13 52.55 434.87 52.1 l 435.32 52.55 q 435.62 52.4 437.27 51.13 q 438.54 50.23 439.29 50.23 q 440.11 50.23 440.86 51.13 q 442.13 51.8 442.54 53.18 q 442.95 54.57 443.33 55.91 q 439.96 56.06 437.79 55.84 q 437.27 56.66 436.3 56.1 q 435.32 55.54 434.87 56.29 q 434.87 57.63 434.87 61.15 q 434.8 64.29 434.87 66.09 q 434.95 68.85 435.32 71.17 q 435.92 71.17 441.01 71.17 q 444.52 71.17 447.07 71.7 x</PATH>
     <PATH pos="0 0 100 100" fill="solid: fff0ffff" hasStroke="0" nonZeroWinding="1">s 457.25 66.09 l 456.53 69.47 q 456.37 70.11 456.37 70.92 q 456.37 73.09 458.17 73.09 q 459.9 73.09 466.58 66.33 q 466.62 63.72 468.53 60.3 q 470.44 56.88 472.75 54.31 q 475.06 51.74 476.19 51.74 q 477.96 51.74 477.96 54.07 q 477.96 55.48 477.27 57.51 q 476.59 59.54 475.26 61.89 q 473.94 64.24 472.01 66.74 q 473.01 68.54 474.06 68.54 q 474.94 68.54 476.01 67.92 q 477.07 67.3 478.68 66.01 l 478.68 68.71 q 476.43 70.47 475.12 71.12 q 473.81 71.76 471.76 71.76 q 470.96 71.76 468.87 70.68 q 464.77 75.02 462.2 77.17 q 459.62 79.32 458.01 79.32 q 455.24 79.32 453.29 76 q 451.34 72.69 451.34 68.71 q 451.34 63.36 457.37 55.88 q 459.18 53.63 460.29 52.8 q 461.39 51.98 462.8 51.98 q 464 51.98 465.09 52.42 q 466.18 52.86 466.18 53.47 q 466.18 55.48 463.48 59.36 q 460.79 63.24 457.25 66.09 x s 485.03 67.46 l 485.03 68.46 q 485.03 70.84 486.2 72.16 q 487.36 73.49 489.25 73.49 q 491.22 73.49 493.34 72.57 q 495.45 71.64 497.54 70.11 q 499.63 68.58 502.64 66.01 l 502.64 68.46 q 498.1 73.93 494.12 76.85 q 490.14 79.76 486.04 79.76 q 482.46 79.76 480.37 76.99 q 478.28 74.21 478.28 69.39 q 478.28 65.17 480.25 61.73 q 482.22 58.29 486.68 54.47 q 489.74 51.86 492.75 50.53 q 495.77 49.21 498.14 49.21 q 500.03 49.21 501.14 50.07 q 502.24 50.93 502.24 52.66 q 502.24 55.2 500.35 57.71 q 498.46 60.22 494.58 62.69 q 490.7 65.17 485.03 67.46 x s 485.43 64.85 q 489.05 63.44 491.63 61.35 q 494.2 59.26 495.43 57.35 q 496.65 55.44 496.65 54.55 q 496.65 53.63 495.81 53.63 q 495.08 53.63 493.46 54.55 q 491.83 55.48 490.16 56.96 q 488.49 58.45 487.16 60.46 q 485.84 62.47 485.43 64.85 x s 502.24 69.11 l 502.24 66.49 q 504.41 63.92 505.54 62.11 q 504.25 61.67 503.67 61.03 q 503.09 60.38 503.09 59.1 q 503.09 57.65 504.29 55.44 q 505.5 53.23 507.27 51.3 q 509.04 49.37 510.48 48.8 q 511.05 48.52 511.57 48.52 q 512.37 48.52 512.37 49.29 q 512.37 49.97 511.13 52.06 q 519.41 50.77 521.58 50.77 q 522.43 50.77 522.75 50.93 q 523.43 51.3 523.87 52.62 q 524.31 53.95 524.31 55.28 q 524.31 56.12 523.57 57.11 q 522.83 58.09 521.02 59.98 q 518.89 62.27 517.44 64.97 q 515.99 67.66 515.99 69.03 q 515.99 70.92 518.32 70.92 q 520.78 70.92 526.85 65.93 l 526.85 68.62 q 523.51 72.12 521.34 74.13 q 519.17 76.14 517.32 77.33 q 515.47 78.52 514.02 78.52 q 512.33 78.52 511.21 76.97 q 510.08 75.42 510.08 72.48 q 510.08 70.76 510.97 68.54 q 511.85 66.33 513.56 63.74 q 515.27 61.15 517.4 58.57 q 516.27 58.81 514.87 59.08 q 513.46 59.34 511.89 59.62 q 510.32 59.9 509.48 60.06 q 506.99 65.05 502.24 69.11 x s 553.3 66.09 l 553.3 68.71 q 549.12 71.36 546.71 71.36 q 545.38 71.36 543.9 70.92 q 540.28 75.5 537.68 77.63 q 535.09 79.76 532.48 79.76 q 529.46 79.76 527.83 76.59 q 526.2 73.41 526.2 68.71 q 526.2 62.31 530.06 54.77 q 533.92 47.23 539.37 40.66 q 544.82 34.09 549.93 29.79 q 555.03 25.48 556.84 25.48 q 558.57 25.48 558.57 27.86 q 558.57 38.39 531.55 64.6 q 531.47 65.33 531.47 67.46 q 531.47 73.01 534.45 73.01 q 535.61 73.01 536.8 72.06 q 537.99 71.12 540.44 68.46 q 539.47 66.29 539.47 65.25 q 539.47 63.04 541.28 60.46 q 543.09 57.89 545.4 56.02 q 547.72 54.15 548.76 54.15 q 550.41 54.15 550.41 56.52 q 550.41 58.33 549.46 60.87 q 548.52 63.4 546.71 66.65 q 547.39 67.22 547.8 67.48 q 548.2 67.74 549 67.74 q 550.85 67.74 553.3 66.09 x s 532.88 60.06 q 534.97 58.25 537.08 55.78 q 539.19 53.31 543.25 48.2 q 547.15 43.29 549.38 40.02 q 551.62 36.74 552.74 34.57 q 553.87 32.4 553.87 31.59 q 553.87 30.99 553.55 30.99 q 552.66 30.99 549.87 33.91 q 547.07 36.82 543.49 41.89 q 538.55 48.88 536.34 52.42 q 534.13 55.96 532.88 60.06 x</PATH>
   </BACKGROUND>
   <LABEL name="Decay Label" id="a23f674e6696d274" memberName="DecayLabel"
-         virtualName="" explicitFocusOrder="0" pos="38.889% 35.135% 10.185% 8.108%"
+         virtualName="" explicitFocusOrder="0" pos="38.889% 35.126% 10.208% 8.124%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Decay"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default monospaced font" fontsize="22" bold="1" italic="0"
          justification="36"/>
   <SLIDER name="Decay Knob" id="3915f5df8ccf2427" memberName="DecayKnob"
-          virtualName="" explicitFocusOrder="0" pos="37.963% 45.946% 12.037% 33.108%"
+          virtualName="" explicitFocusOrder="0" pos="37.986% 45.995% 12.014% 33.066%"
           bkgcol="ff5f9ea0" trackcol="ffff7f50" rotarysliderfill="ff7fffd4"
           rotaryslideroutline="ff5f9ea0" textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0"
           textboxhighlight="ffff7f50" textboxoutline="ff5f9ea0" min="0"
           max="60" int="0" style="Rotary" textBoxPos="TextBoxBelow" textBoxEditable="1"
           textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <LABEL name="Comb Delay Label 1" id="139264e675bf5151" memberName="CombDelayLabel1"
-         virtualName="" explicitFocusOrder="0" pos="0% 2.703% 16.667% 12.162%"
+         virtualName="" explicitFocusOrder="0" pos="0% 2.746% 16.667% 12.128%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Comb Delay 1"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default monospaced font" fontsize="16" bold="1" italic="0"
          justification="36"/>
   <SLIDER name="Comb Delay Knob 1" id="781e4d63b5fdb14" memberName="CombDelayKnob1"
-          virtualName="" explicitFocusOrder="0" pos="0.926% 13.514% 13.889% 32.432%"
+          virtualName="" explicitFocusOrder="0" pos="0.903% 13.501% 13.889% 32.38%"
           trackcol="ffff7f50" rotarysliderfill="ff7fffd4" rotaryslideroutline="ff5f9ea0"
           textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0" textboxhighlight="ffff7f50"
           textboxoutline="ff5f9ea0" min="5" max="100" int="0" style="Rotary"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="Comb Delay Label 2" id="cfce5dbbb4f1d462" memberName="CombDelayLabel2"
-         virtualName="" explicitFocusOrder="0" pos="15.741% 2.703% 16.667% 12.162%"
+         virtualName="" explicitFocusOrder="0" pos="15.764% 2.746% 16.667% 12.128%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Comb Delay 2"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default monospaced font" fontsize="16" bold="1" italic="0"
          justification="36"/>
   <SLIDER name="Comb Delay Knob 2" id="d57f521d23945313" memberName="CombDelayKnob2"
-          virtualName="" explicitFocusOrder="0" pos="16.667% 13.514% 13.889% 32.432%"
+          virtualName="" explicitFocusOrder="0" pos="16.667% 13.501% 13.889% 32.38%"
           trackcol="ffff7f50" rotarysliderfill="ff7fffd4" rotaryslideroutline="ff5f9ea0"
           textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0" textboxhighlight="ffff7f50"
           textboxoutline="ff5f9ea0" min="5" max="100" int="0" style="Rotary"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="Comb Delay Label 3" id="c3c817521aa032be" memberName="CombDelayLabel3"
-         virtualName="" explicitFocusOrder="0" pos="0% 51.351% 16.667% 12.162%"
+         virtualName="" explicitFocusOrder="0" pos="0% 51.373% 16.667% 12.128%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Comb Delay 3"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default monospaced font" fontsize="16" bold="1" italic="0"
          justification="36"/>
   <SLIDER name="Comb Delay Knob 3" id="b032a082bf45549d" memberName="CombDelayKnob3"
-          virtualName="" explicitFocusOrder="0" pos="0.926% 62.162% 13.889% 32.432%"
+          virtualName="" explicitFocusOrder="0" pos="0.903% 62.128% 13.889% 32.38%"
           trackcol="ffff7f50" rotarysliderfill="ff7fffd4" rotaryslideroutline="ff5f9ea0"
           textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0" textboxhighlight="ffff7f50"
           textboxoutline="ff5f9ea0" min="5" max="100" int="0" style="Rotary"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="Comb Delay Label 4" id="178e7bb5ae7d849f" memberName="CombDelayLabel4"
-         virtualName="" explicitFocusOrder="0" pos="15.741% 51.351% 16.667% 12.162%"
+         virtualName="" explicitFocusOrder="0" pos="15.764% 51.373% 16.667% 12.128%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Comb Delay 4"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default monospaced font" fontsize="16" bold="1" italic="0"
@@ -1026,72 +1039,72 @@ BEGIN_JUCER_METADATA
           min="5" max="100" int="0" style="Rotary" textBoxPos="TextBoxBelow"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <LABEL name="Allpass Delay Label 1" id="f958e7e2950f741f" memberName="AllpassDelayLabel1"
-         virtualName="" explicitFocusOrder="0" pos="67.593% 2.703% 16.667% 12.162%"
+         virtualName="" explicitFocusOrder="0" pos="67.569% 2.746% 16.667% 12.128%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Allpass Delay 1"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default monospaced font" fontsize="16" bold="1" italic="0"
          justification="36"/>
   <SLIDER name="Allpass Delay Knob 1" id="869bd45ddd07d6fe" memberName="AllpassDelayKnob1"
-          virtualName="" explicitFocusOrder="0" pos="68.519% 13.514% 14.815% 32.432%"
+          virtualName="" explicitFocusOrder="0" pos="68.542% 13.501% 14.792% 32.38%"
           trackcol="ffff7f50" rotarysliderfill="ff7fffd4" rotaryslideroutline="ff5f9ea0"
           textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0" textboxhighlight="ffff7f50"
           textboxoutline="ff5f9ea0" min="0" max="20" int="0" style="Rotary"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="Allpass Gain Label 1" id="63defba1abf34ab6" memberName="AllpassGainLabel1"
-         virtualName="" explicitFocusOrder="0" pos="83.333% 2.703% 16.667% 12.162%"
+         virtualName="" explicitFocusOrder="0" pos="83.333% 2.746% 16.667% 12.128%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Allpass Gain 1"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default monospaced font" fontsize="16" bold="1" italic="0"
          justification="36"/>
   <SLIDER name="Allpass Gain Knob 1" id="1783dfe89a140fc1" memberName="AllpassGainKnob1"
-          virtualName="" explicitFocusOrder="0" pos="84.259% 13.514% 14.815% 32.432%"
+          virtualName="" explicitFocusOrder="0" pos="84.236% 13.501% 14.792% 32.38%"
           trackcol="ffff7f50" rotarysliderfill="ff7fffd4" rotaryslideroutline="ff5f9ea0"
           textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0" textboxhighlight="ffff7f50"
           textboxoutline="ff5f9ea0" min="0" max="1" int="0" style="Rotary"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="Mix Label" id="20f48f39f2927cb8" memberName="MixLabel"
-         virtualName="" explicitFocusOrder="0" pos="50.926% 35.135% 10.185% 8.108%"
+         virtualName="" explicitFocusOrder="0" pos="50.903% 35.126% 10.208% 8.124%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Mix"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default monospaced font" fontsize="22" bold="1" italic="0"
          justification="36"/>
   <SLIDER name="Mix Knob" id="a6e532f29a4cf942" memberName="MixKnob" virtualName=""
-          explicitFocusOrder="0" pos="50% 45.946% 12.037% 33.108%" bkgcol="ff5f9ea0"
+          explicitFocusOrder="0" pos="50% 45.995% 12.014% 33.066%" bkgcol="ff5f9ea0"
           trackcol="ffff7f50" rotarysliderfill="ff7fffd4" rotaryslideroutline="ff5f9ea0"
           textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0" textboxhighlight="ffff7f50"
           textboxoutline="ff5f9ea0" min="0" max="1" int="0" style="Rotary"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="Allpass Delay Label 1" id="bad10470168fb9ed" memberName="AllpassDelayLabel2"
-         virtualName="" explicitFocusOrder="0" pos="67.593% 51.351% 16.667% 12.162%"
+         virtualName="" explicitFocusOrder="0" pos="67.569% 51.373% 16.667% 12.128%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Allpass Delay 2"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default monospaced font" fontsize="16" bold="1" italic="0"
          justification="36"/>
   <SLIDER name="Allpass Delay Knob 2" id="fcf48cdf13930e58" memberName="AllpassDelayKnob2"
-          virtualName="" explicitFocusOrder="0" pos="68.519% 62.162% 14.815% 32.432%"
+          virtualName="" explicitFocusOrder="0" pos="68.542% 62.128% 14.792% 32.38%"
           trackcol="ffff7f50" rotarysliderfill="ff7fffd4" rotaryslideroutline="ff5f9ea0"
           textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0" textboxhighlight="ffff7f50"
           textboxoutline="ff5f9ea0" min="0" max="20" int="0" style="Rotary"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="Allpass Gain Label 2" id="88528c5fb6df9b21" memberName="AllpassGainLabel3"
-         virtualName="" explicitFocusOrder="0" pos="83.333% 51.351% 16.667% 12.162%"
+         virtualName="" explicitFocusOrder="0" pos="83.333% 51.373% 16.667% 12.128%"
          textCol="fff0ffff" edTextCol="ff000000" edBkgCol="ffffff" labelText="Allpass Gain 2"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default monospaced font" fontsize="16" bold="1" italic="0"
          justification="36"/>
   <SLIDER name="Allpass Gain Knob 2" id="f8ba3b7dc7e423b8" memberName="AllpassGainKnob2"
-          virtualName="" explicitFocusOrder="0" pos="84.259% 62.162% 14.815% 32.432%"
+          virtualName="" explicitFocusOrder="0" pos="84.236% 62.128% 14.792% 32.38%"
           trackcol="ffff7f50" rotarysliderfill="ff7fffd4" rotaryslideroutline="ff5f9ea0"
           textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0" textboxhighlight="ffff7f50"
           textboxoutline="ff5f9ea0" min="0" max="1" int="0" style="Rotary"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
   <TEXTBUTTON name="Bypass Button" id="8aa6c522d03341a2" memberName="BypassButton"
-              virtualName="" explicitFocusOrder="0" pos="41.667% 86.486% 17.361% 8.108%"
+              virtualName="" explicitFocusOrder="0" pos="41.667% 86.499% 17.361% 8.124%"
               bgColOff="ff5f9ea0" bgColOn="ffff7f50" textCol="fff0ffff" textColOn="fff0ffff"
               buttonText="Bypass" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
 </JUCER_COMPONENT>

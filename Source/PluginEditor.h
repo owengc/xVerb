@@ -57,6 +57,7 @@ public:
     void resized();
     void sliderValueChanged (Slider* sliderThatWasMoved);
     void buttonClicked (Button* buttonThatWasClicked);
+    void visibilityChanged();
 
     // Binary resources:
     static const char* brokeVerb_png;

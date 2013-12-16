@@ -28,13 +28,12 @@ XVerbAudioProcessor::XVerbAudioProcessor()
     UIUpdateFlag = true;
     
 
-    std::cout << "XVerb constructor called" << std::endl;
+    //std::cout << "XVerb constructor called" << std::endl;
 }
 
 XVerbAudioProcessor::~XVerbAudioProcessor()
 {
-    std::cout << "XVerb destructor called" << std::endl;
-
+    //std::cout << "XVerb destructor called" << std::endl;
 }
 
 //==============================================================================
@@ -390,8 +389,8 @@ void XVerbAudioProcessor::setStateInformation (const void* data, int sizeInBytes
             }
         }
         delete pRoot;
-        UIUpdateFlag = true; //Request UI update
     }
+    UIUpdateFlag = true; //Request UI update
 }
 
 //==============================================================================

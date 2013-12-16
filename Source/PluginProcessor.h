@@ -82,7 +82,8 @@ public:
         NumParams
     };
     bool NeedsUIUpdate(){return UIUpdateFlag;};
-    void ClearUIUpdateFlag(){UIUpdateFlag = false;}
+    void ClearUIUpdateFlag(){UIUpdateFlag = false;};
+    void RaiseUIUpdateFlag(){UIUpdateFlag = true;};
 private:
     //Private Data, helper methods, etc
     float UserParams[NumParams];

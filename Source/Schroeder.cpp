@@ -47,17 +47,18 @@ Schroeder::Schroeder(const int sr, const float rt60,
     d_ms_max = 20.0f;
     allpasses[0] = new Allpass(sr, aDelay1, d_ms_max, aGain1);
     allpasses[1] = new Allpass(sr, aDelay2, d_ms_max, aGain2);
-    std::cout << "Schroeder constructor called" << std::endl;
+    //std::cout << "Schroeder constructor called" << std::endl;
 
 }
-Schroeder::~Schroeder(){std::cout << "Schroeder destructor called" << std::endl;}/*{
-               for(int i = 0; i < NUM_COMBS; i++){
-               delete[] combs[i];
-               }
-               for(int i = 0; i < NUM_ALLPASSES; i++){
-               delete[] allpasses[i];
-               }
-               }*/
+Schroeder::~Schroeder(){
+    //std::cout << "Schroeder destructor called" << std::endl;
+    for(int i = 0; i < NUM_COMBS; i++){
+        delete combs[i];
+    }
+    for(int i = 0; i < NUM_ALLPASSES; i++){
+        delete allpasses[i];
+    }
+}
 
 //getters
 float Schroeder::getDecayFactor(){return decayFactor;}
