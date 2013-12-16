@@ -130,7 +130,7 @@ void XVerbAudioProcessor::setParameter (int index, float newValue)
         default:
             break;
     }
-    std::cout << "updating param " << index << ": " << newValue << std::endl;
+    //std::cout << "updating param " << index << ": " << newValue << std::endl;
 }
 
 const String XVerbAudioProcessor::getParameterName (int index)

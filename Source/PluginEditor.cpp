@@ -269,7 +269,7 @@ XVerbAudioProcessorEditor::XVerbAudioProcessorEditor (XVerbAudioProcessor* owner
     LowpassCutoffLabel->setColour (TextEditor::backgroundColourId, Colour (0x00ffffff));
 
     addAndMakeVisible (LowpassCutoffKnob = new Slider ("LowpassCutoff Knob"));
-    LowpassCutoffKnob->setRange (20, 20000, 0);
+    LowpassCutoffKnob->setRange (20, 10000, 0);
     LowpassCutoffKnob->setSliderStyle (Slider::Rotary);
     LowpassCutoffKnob->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
     LowpassCutoffKnob->setColour (Slider::backgroundColourId, Colours::cadetblue);
@@ -980,7 +980,7 @@ void XVerbAudioProcessorEditor::timerCallback(){
         AllpassGainKnob2->setValue(ourProcessor->getParameter(XVerbAudioProcessor::AllpassGain2), juce::dontSendNotification);
         LowpassCutoffKnob->setValue(ourProcessor->getParameter(XVerbAudioProcessor::LowpassCutoff), juce::dontSendNotification);
         ourProcessor->ClearUIUpdateFlag();
-        std::cout << "UIUpdated" << std::endl;
+        //std::cout << "UIUpdated" << std::endl;
     }
 
 }
@@ -1152,7 +1152,7 @@ BEGIN_JUCER_METADATA
           bkgcol="ff5f9ea0" trackcol="ffff7f50" rotarysliderfill="ff7fffd4"
           rotaryslideroutline="ff5f9ea0" textboxtext="fff0f8ff" textboxbkgd="ff5f9ea0"
           textboxhighlight="ffff7f50" textboxoutline="ff5f9ea0" min="20"
-          max="20000" int="0" style="Rotary" textBoxPos="TextBoxBelow"
+          max="10000" int="0" style="Rotary" textBoxPos="TextBoxBelow"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
 </JUCER_COMPONENT>
 
