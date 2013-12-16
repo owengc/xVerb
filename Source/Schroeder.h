@@ -27,11 +27,12 @@ private:
     float decayFactor, ALLPASS_GAIN_LIMIT = 0.2f;//to keep the allpasses from exploding
     Comb *combs[NUM_COMBS];
     Allpass *allpasses[NUM_ALLPASSES];
+    Lowpass *lowpass;
 public:
     //constructor / destructor
     Schroeder(const int sr = 44100, const float rt60 = 3.0,
               const float cDelay1 = 29.7, const float cDelay2 = 37.1, const float cDelay3 = 41.1, const float cDelay4 = 43.7,
-              const float aDelay1 = 5.0, const float aDelay2 = 1.7, const float aGain1 = 0.5, const float aGain2 = 0.5);
+              const float aDelay1 = 5.0, const float aDelay2 = 1.7, const float aGain1 = 0.5, const float aGain2 = 0.5, const float lCutoff = 500.0f);
     ~Schroeder();
     
     //getters

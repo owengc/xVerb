@@ -28,7 +28,7 @@ inline float calcCombGain(const float d_ms, const float rt60){
 //constructor / destructor
 Schroeder::Schroeder(const int sr, const float rt60,
           const float cDelay1, const float cDelay2, const float cDelay3, const float cDelay4,
-          const float aDelay1, const float aDelay2, const float aGain1, const float aGain2){
+          const float aDelay1, const float aDelay2, const float aGain1, const float aGain2, const float lCutoff){
     decayFactor = rt60;
     float d_ms, d_ms_max = 100.0f, gain;
     d_ms = cDelay1;
@@ -47,6 +47,8 @@ Schroeder::Schroeder(const int sr, const float rt60,
     d_ms_max = 20.0f;
     allpasses[0] = new Allpass(sr, aDelay1, d_ms_max, aGain1);
     allpasses[1] = new Allpass(sr, aDelay2, d_ms_max, aGain2);
+    
+    lowpass = new Lowpass(sr, lCutoff);
     //std::cout << "Schroeder constructor called" << std::endl;
 
 }
@@ -90,10 +92,10 @@ void Schroeder::setAllpassDelay(const int id, const int sr, const float d_ms){al
 float Schroeder::next(const float in){
     float out = 0.0f;
     for(int i = 0; i < NUM_COMBS; i++){
-        out += combs[i]->next(in * 0.01f);
+        out += combs[i]->next(in * 0.125f); //scale down to avoid clipping
     }
-    out = allpasses[1]->next(allpasses[0]->next(out));
-    return out * 2.5f;//still working out best way to avoid clipping
+    out = allpasses[1]->next((1.0f - allpasses[1]->getGain()) * allpasses[0]->next((1.0f - allpasses[0]->getGain()) * out));//still working out best way to avoid clipping
+    return lowpass->next(out * NUM_COMBS); //scale back up (not all the way) at output
 }
 //update for change in sampling rate and to clear delay buffers...
 /*void reset(const int sr){

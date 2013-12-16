@@ -85,7 +85,10 @@ float Delay::next(const float in, const float gain){
         readPosB = 0;//wrap back to the beginning
         //std::cout << "wrapping readB" << std::endl;
     }
-    
+    /*float write = in + (gain * out);
+    if(write > 1.0f){
+        std::cout << "Clipping: " << write << std::endl;
+    }*/
     buffer[writePos++] = in + (gain * out);//by default there will be no feedback
     if(writePos == MAX_DELAY_SAMPLES){//if we've reached the end of the buffer
         writePos = 0;//wrap back to the beginning
