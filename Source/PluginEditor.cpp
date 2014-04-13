@@ -27,7 +27,8 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-XVerbAudioProcessorEditor::XVerbAudioProcessorEditor (XVerbAudioProcessor* ownerFilter) : juce::AudioProcessorEditor(ownerFilter)
+XVerbAudioProcessorEditor::XVerbAudioProcessorEditor (XVerbAudioProcessor* ownerFilter)
+    : AudioProcessorEditor(ownerFilter)
 {
     addAndMakeVisible (DecayLabel = new Label ("Decay Label",
                                                "Decay"));
@@ -998,7 +999,7 @@ BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="XVerbAudioProcessorEditor"
                  componentName="" parentClasses="public AudioProcessorEditor, public Timer"
-                 constructorParams="XVerbAudioProcessor* ownerFilter" variableInitialisers=""
+                 constructorParams="XVerbAudioProcessor* ownerFilter" variableInitialisers="AudioProcessorEditor(ownerFilter)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="1" initialWidth="864" initialHeight="296">
   <METHODS>
